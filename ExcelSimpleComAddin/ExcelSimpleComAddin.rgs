@@ -12,9 +12,9 @@ HKCU
 					{ 
 						'ExcelComAddin.MyConnect.1'
 						{ 
-							val FriendlyName = s 'WORD Custom Addin'
-							var Description = s 'Word Custom Addin'
-							val LoadBehavior = d '00000003' 
+							val FriendlyName = s 'Excel Custom Addin'
+							val Description = s 'Excel Custom Addin'
+							val LoadBehavior = d '00000002' 
 							val CommandLineSafe = d '00000001' 
 						}
 					}

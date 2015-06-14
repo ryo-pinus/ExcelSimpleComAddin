@@ -1,0 +1,34 @@
+// ExcelSimpleComAddin.idl : ExcelSimpleComAddin の IDL ソース
+//
+
+// このファイルは、タイプ ライブラリ (ExcelSimpleComAddin.tlb) およびマーシャリング コードを
+// 作成するために MIDL ツールによって処理されます。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(1DB68E7D-D1D6-420E-9638-F9FD64FF3B8A),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IMyConnect : IUnknown{
+};
+[
+	uuid(F82B7BA6-2D0B-4153-80CE-C2AAF1C514AA),
+	version(1.0),
+]
+library ExcelSimpleComAddinLib
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(693DC738-F76F-451B-AE5B-75388ACD5EF0)		
+	]
+	coclass MyConnect
+	{
+		[default] interface IMyConnect;
+	};
+};

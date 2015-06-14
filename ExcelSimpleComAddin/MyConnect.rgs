@@ -1,0 +1,25 @@
+HKCR
+{
+	ExcelComAddin.MyConnect.1 = s 'MyConnect Class'
+	{
+		CLSID = s '{693DC738-F76F-451B-AE5B-75388ACD5EF0}'
+	}
+	ExcelComAddin.MyConnect = s 'MyConnect Class'
+	{		
+		CurVer = s 'ExcelComAddin.MyConnect.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {693DC738-F76F-451B-AE5B-75388ACD5EF0} = s 'MyConnect Class'
+		{
+			ProgID = s 'ExcelComAddin.MyConnect.1'
+			VersionIndependentProgID = s 'ExcelComAddin.MyConnect'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{F82B7BA6-2D0B-4153-80CE-C2AAF1C514AA}'
+			Version = s '1.0'
+		}
+	}
+}

@@ -1,9 +1,10 @@
 // MyConnect.cpp : CMyConnect ‚ÌŽÀ‘•
 
 #include "stdafx.h"
+
 #include "MyConnect.h"
 
-
+_ATL_FUNC_INFO NewWorkbookInfo = { CC_STDCALL, VT_EMPTY, 1, { VT_PTR } };
 // CMyConnect
 
 STDMETHODIMP CMyConnect::InterfaceSupportsErrorInfo(REFIID riid)

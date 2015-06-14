@@ -15,6 +15,7 @@
 
 using namespace ATL;
 
+extern _ATL_FUNC_INFO NewWorkbookInfo;
 // CMyConnect
 
 class ATL_NO_VTABLE CMyConnect :
@@ -22,7 +23,8 @@ class ATL_NO_VTABLE CMyConnect :
 	public CComCoClass<CMyConnect, &CLSID_MyConnect>,
 	public ISupportErrorInfo,
 	public IMyConnect,
-	public IDispatchImpl < _IDTExtensibility2, &__uuidof(_IDTExtensibility2), &LIBID_AddInDesignerObjects, /* wMajor = */ 1 >
+	public IDispatchImpl < _IDTExtensibility2, &__uuidof(_IDTExtensibility2), &LIBID_AddInDesignerObjects, /* wMajor = */ 1 >,
+	public IDispEventSimpleImpl<1, CMyConnect, &__uuidof(Excel::AppEvents)>
 {
 public:
 	CMyConnect()
@@ -62,11 +64,22 @@ public:
 public:
 	STDMETHOD(OnConnection)(LPDISPATCH Application, ext_ConnectMode ConnectMode, LPDISPATCH AddInInst, SAFEARRAY * * custom)
 	{
-		MessageBox(NULL, L"Hello2", L"Hello2", MB_OK);
+		CComQIPtr<Excel::_Application> app(Application);
+
+		m_AppPtr = app;
+		MessageBox(NULL, L"OnConnection", L"OnConnection", MB_OK);
+
+		HRESULT hr = IDispEventSimpleImpl<1, CMyConnect, &__uuidof(Excel::AppEvents)>::DispEventAdvise(m_AppPtr);
+		
+		if (FAILED(hr))
+			return hr;
+
 		return S_OK;
 	}
 	STDMETHOD(OnDisconnection)(ext_DisconnectMode RemoveMode, SAFEARRAY * * custom)
 	{
+		HRESULT hr = IDispEventSimpleImpl<1, CMyConnect, &__uuidof(Excel::AppEvents)>::DispEventUnadvise(m_AppPtr);
+		m_AppPtr = NULL;
 		return S_OK;
 	}
 	STDMETHOD(OnAddInsUpdate)(SAFEARRAY * * custom)
@@ -81,6 +94,17 @@ public:
 	{
 		return S_OK;
 	}
+
+	BEGIN_SINK_MAP(CMyConnect)
+		SINK_ENTRY_INFO(/*nID =*/ 1, __uuidof(Excel::AppEvents), /*dispid =*/ 0x0000061d, NewWorkbook, &NewWorkbookInfo)
+	END_SINK_MAP()
+
+	void __stdcall NewWorkbook(struct _Workbook * Wb)
+	{
+		MessageBox(NULL, L"NewWorkbook", L"NewWorkbook", MB_OK);
+	}
+private:
+	CComPtr<Excel::_Application> m_AppPtr;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(MyConnect), CMyConnect)

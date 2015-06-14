@@ -15,7 +15,6 @@
 
 using namespace ATL;
 
-
 // CMyConnect
 
 class ATL_NO_VTABLE CMyConnect :

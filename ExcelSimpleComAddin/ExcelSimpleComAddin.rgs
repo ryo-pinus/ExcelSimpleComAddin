@@ -1,3 +1,25 @@
-HKCR
-{
+HKCU
+{ 
+	Software
+	{
+		Microsoft
+		{
+			Office
+			{
+				Excel
+				{ 
+					Addins
+					{ 
+						'ExcelComAddin.MyConnect.1'
+						{ 
+							val FriendlyName = s 'WORD Custom Addin'
+							var Description = s 'Word Custom Addin'
+							val LoadBehavior = d '00000003' 
+							val CommandLineSafe = d '00000001' 
+						}
+					}
+				}
+			}
+		}
+	}
 }

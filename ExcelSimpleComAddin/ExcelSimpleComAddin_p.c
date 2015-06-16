@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jun 14 22:24:39 2015
+/* at Sat Jun 20 14:39:50 2015
  */
 /* Compiler settings for ExcelSimpleComAddin.idl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -87,6 +87,13 @@ extern const MIDL_SERVER_INFO IMyConnect_ServerInfo;
 extern const MIDL_STUBLESS_PROXY_INFO IMyConnect_ProxyInfo;
 
 
+extern const MIDL_STUB_DESC Object_StubDesc;
+
+
+extern const MIDL_SERVER_INFO IMyAppEvents_ServerInfo;
+extern const MIDL_STUBLESS_PROXY_INFO IMyAppEvents_ProxyInfo;
+
+
 
 #if !defined(__RPC_WIN64__)
 #error  Invalid build platform for this stub.
@@ -164,6 +171,55 @@ const CInterfaceStubVtbl _IMyConnectStubVtbl =
     CStdStubBuffer_METHODS
 };
 
+
+/* Object interface: IMyAppEvents, ver. 0.0,
+   GUID={0x3921B728,0xA41D,0x4B85,{0xBB,0xDA,0x3D,0xE0,0x83,0x5F,0xF7,0x92}} */
+
+#pragma code_seg(".orpc")
+static const unsigned short IMyAppEvents_FormatStringOffsetTable[] =
+    {
+    0
+    };
+
+static const MIDL_STUBLESS_PROXY_INFO IMyAppEvents_ProxyInfo =
+    {
+    &Object_StubDesc,
+    ExcelSimpleComAddin__MIDL_ProcFormatString.Format,
+    &IMyAppEvents_FormatStringOffsetTable[-3],
+    0,
+    0,
+    0
+    };
+
+
+static const MIDL_SERVER_INFO IMyAppEvents_ServerInfo = 
+    {
+    &Object_StubDesc,
+    0,
+    ExcelSimpleComAddin__MIDL_ProcFormatString.Format,
+    &IMyAppEvents_FormatStringOffsetTable[-3],
+    0,
+    0,
+    0,
+    0};
+CINTERFACE_PROXY_VTABLE(3) _IMyAppEventsProxyVtbl = 
+{
+    0,
+    &IID_IMyAppEvents,
+    IUnknown_QueryInterface_Proxy,
+    IUnknown_AddRef_Proxy,
+    IUnknown_Release_Proxy
+};
+
+const CInterfaceStubVtbl _IMyAppEventsStubVtbl =
+{
+    &IID_IMyAppEvents,
+    &IMyAppEvents_ServerInfo,
+    3,
+    0, /* pure interpreted */
+    CStdStubBuffer_METHODS
+};
+
 static const MIDL_STUB_DESC Object_StubDesc = 
     {
     0,
@@ -190,18 +246,21 @@ static const MIDL_STUB_DESC Object_StubDesc =
 
 const CInterfaceProxyVtbl * const _ExcelSimpleComAddin_ProxyVtblList[] = 
 {
+    ( CInterfaceProxyVtbl *) &_IMyAppEventsProxyVtbl,
     ( CInterfaceProxyVtbl *) &_IMyConnectProxyVtbl,
     0
 };
 
 const CInterfaceStubVtbl * const _ExcelSimpleComAddin_StubVtblList[] = 
 {
+    ( CInterfaceStubVtbl *) &_IMyAppEventsStubVtbl,
     ( CInterfaceStubVtbl *) &_IMyConnectStubVtbl,
     0
 };
 
 PCInterfaceName const _ExcelSimpleComAddin_InterfaceNamesList[] = 
 {
+    "IMyAppEvents",
     "IMyConnect",
     0
 };
@@ -211,14 +270,11 @@ PCInterfaceName const _ExcelSimpleComAddin_InterfaceNamesList[] =
 
 int __stdcall _ExcelSimpleComAddin_IID_Lookup( const IID * pIID, int * pIndex )
 {
-    
-    if(!_ExcelSimpleComAddin_CHECK_IID(0))
-        {
-        *pIndex = 0;
-        return 1;
-        }
+    IID_BS_LOOKUP_SETUP
 
-    return 0;
+    IID_BS_LOOKUP_INITIAL_TEST( _ExcelSimpleComAddin, 2, 1 )
+    IID_BS_LOOKUP_RETURN_RESULT( _ExcelSimpleComAddin, 2, *pIndex )
+    
 }
 
 const ExtendedProxyFileInfo ExcelSimpleComAddin_ProxyFileInfo = 
@@ -228,7 +284,7 @@ const ExtendedProxyFileInfo ExcelSimpleComAddin_ProxyFileInfo =
     (const PCInterfaceName * ) & _ExcelSimpleComAddin_InterfaceNamesList,
     0, /* no delegation */
     & _ExcelSimpleComAddin_IID_Lookup, 
-    1,
+    2,
     2,
     0, /* table of [async_uuid] interfaces */
     0, /* Filler1 */

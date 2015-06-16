@@ -17,6 +17,15 @@ import "ocidl.idl";
 interface IMyConnect : IUnknown{
 };
 [
+	object,
+	uuid(3921B728-A41D-4B85-BBDA-3DE0835FF792),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IMyAppEvents : IUnknown{
+};
+[
 	uuid(F82B7BA6-2D0B-4153-80CE-C2AAF1C514AA),
 	version(1.0),
 ]
@@ -30,5 +39,12 @@ library ExcelSimpleComAddinLib
 	coclass MyConnect
 	{
 		[default] interface IMyConnect;
+	};
+	[
+		uuid(EFD908FE-071F-4674-A006-085A523EE451)		
+	]
+	coclass MyAppEvents
+	{
+		[default] interface IMyAppEvents;
 	};
 };

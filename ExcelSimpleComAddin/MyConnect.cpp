@@ -1,10 +1,10 @@
 // MyConnect.cpp : CMyConnect ‚ÌŽÀ‘•
 
 #include "stdafx.h"
-
 #include "MyConnect.h"
+#include "MyAppEvents.h"
 
-_ATL_FUNC_INFO NewWorkbookInfo = { CC_STDCALL, VT_EMPTY, 1, { VT_PTR } };
+
 // CMyConnect
 
 STDMETHODIMP CMyConnect::InterfaceSupportsErrorInfo(REFIID riid)
@@ -20,4 +20,44 @@ STDMETHODIMP CMyConnect::InterfaceSupportsErrorInfo(REFIID riid)
 			return S_OK;
 	}
 	return S_FALSE;
+}
+
+
+STDMETHODIMP CMyConnect::OnConnection(LPDISPATCH Application, ext_ConnectMode ConnectMode, LPDISPATCH AddInInst, SAFEARRAY * * custom)
+{
+	CComQIPtr<Excel::_Application> app(Application);
+
+	m_AppPtr = app;
+	MessageBox(NULL, L"OnConnection", L"OnConnection", MB_OK);
+
+	
+	IMyAppEvents *pAppEvents = NULL;
+	CMyAppEvents::CreateInstance<>(&pAppEvents);
+	m_appEvents = pAppEvents;
+
+	HRESULT hr = ((CMyAppEvents*)m_appEvents)->DispEventAdvise(m_AppPtr);
+	if (FAILED(hr))
+		return hr;
+
+	return S_OK;
+}
+STDMETHODIMP CMyConnect::OnDisconnection(ext_DisconnectMode RemoveMode, SAFEARRAY * * custom)
+{
+	HRESULT hr = ((CMyAppEvents*)m_appEvents)->DispEventUnadvise(m_AppPtr);
+	m_appEvents->Release();
+	m_appEvents = NULL;
+	m_AppPtr = NULL;
+	return S_OK;
+}
+STDMETHODIMP CMyConnect::OnAddInsUpdate(SAFEARRAY * * custom)
+{
+	return S_OK;
+}
+STDMETHODIMP CMyConnect::OnStartupComplete(SAFEARRAY * * custom)
+{
+	return S_OK;
+}
+STDMETHODIMP CMyConnect::OnBeginShutdown(SAFEARRAY * * custom)
+{
+	return S_OK;
 }

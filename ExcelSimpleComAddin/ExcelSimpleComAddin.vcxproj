@@ -239,6 +239,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="MyAppEvents.cpp" />
     <ClCompile Include="MyConnect.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -264,6 +265,7 @@
   <ItemGroup>
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="ExcelSimpleComAddin_i.h" />
+    <ClInclude Include="MyAppEvents.h" />
     <ClInclude Include="MyConnect.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -279,6 +281,7 @@
   <ItemGroup>
     <None Include="ExcelSimpleComAddin.def" />
     <None Include="ExcelSimpleComAddin.rgs" />
+    <None Include="MyAppEvents.rgs" />
     <None Include="MyConnect.rgs" />
   </ItemGroup>
   <ItemGroup>

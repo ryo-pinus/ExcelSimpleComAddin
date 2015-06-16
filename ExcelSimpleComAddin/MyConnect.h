@@ -6,7 +6,7 @@
 
 
 #include "ExcelSimpleComAddin_i.h"
-
+#include "MyAppEvents.h"
 
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
@@ -15,7 +15,6 @@
 
 using namespace ATL;
 
-extern _ATL_FUNC_INFO NewWorkbookInfo;
 // CMyConnect
 
 class ATL_NO_VTABLE CMyConnect :
@@ -23,8 +22,7 @@ class ATL_NO_VTABLE CMyConnect :
 	public CComCoClass<CMyConnect, &CLSID_MyConnect>,
 	public ISupportErrorInfo,
 	public IMyConnect,
-	public IDispatchImpl < _IDTExtensibility2, &__uuidof(_IDTExtensibility2), &LIBID_AddInDesignerObjects, /* wMajor = */ 1 >,
-	public IDispEventSimpleImpl<1, CMyConnect, &__uuidof(Excel::AppEvents)>
+	public IDispatchImpl < _IDTExtensibility2, &__uuidof(_IDTExtensibility2), &LIBID_AddInDesignerObjects, /* wMajor = */ 1 >
 {
 public:
 	CMyConnect()
@@ -46,65 +44,17 @@ public:
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
-		return S_OK;
-	}
-
-	void FinalRelease()
-	{
-	}
-
-public:
-
-
-
-
 	// _IDTExtensibility2 Methods
 public:
-	STDMETHOD(OnConnection)(LPDISPATCH Application, ext_ConnectMode ConnectMode, LPDISPATCH AddInInst, SAFEARRAY * * custom)
-	{
-		CComQIPtr<Excel::_Application> app(Application);
+	STDMETHOD(OnConnection)(LPDISPATCH Application, ext_ConnectMode ConnectMode, LPDISPATCH AddInInst, SAFEARRAY * * custom);
+	STDMETHOD(OnDisconnection)(ext_DisconnectMode RemoveMode, SAFEARRAY * * custom);
+	STDMETHOD(OnAddInsUpdate)(SAFEARRAY * * custom);
+	STDMETHOD(OnStartupComplete)(SAFEARRAY * * custom);
+	STDMETHOD(OnBeginShutdown)(SAFEARRAY * * custom);
 
-		m_AppPtr = app;
-		MessageBox(NULL, L"OnConnection", L"OnConnection", MB_OK);
-
-		HRESULT hr = IDispEventSimpleImpl<1, CMyConnect, &__uuidof(Excel::AppEvents)>::DispEventAdvise(m_AppPtr);
-		
-		if (FAILED(hr))
-			return hr;
-
-		return S_OK;
-	}
-	STDMETHOD(OnDisconnection)(ext_DisconnectMode RemoveMode, SAFEARRAY * * custom)
-	{
-		HRESULT hr = IDispEventSimpleImpl<1, CMyConnect, &__uuidof(Excel::AppEvents)>::DispEventUnadvise(m_AppPtr);
-		m_AppPtr = NULL;
-		return S_OK;
-	}
-	STDMETHOD(OnAddInsUpdate)(SAFEARRAY * * custom)
-	{
-		return S_OK;
-	}
-	STDMETHOD(OnStartupComplete)(SAFEARRAY * * custom)
-	{
-		return S_OK;
-	}
-	STDMETHOD(OnBeginShutdown)(SAFEARRAY * * custom)
-	{
-		return S_OK;
-	}
-
-	BEGIN_SINK_MAP(CMyConnect)
-		SINK_ENTRY_INFO(/*nID =*/ 1, __uuidof(Excel::AppEvents), /*dispid =*/ 0x0000061d, NewWorkbook, &NewWorkbookInfo)
-	END_SINK_MAP()
-
-	void __stdcall NewWorkbook(struct _Workbook * Wb)
-	{
-		MessageBox(NULL, L"NewWorkbook", L"NewWorkbook", MB_OK);
-	}
 private:
 	CComPtr<Excel::_Application> m_AppPtr;
+	IMyAppEvents* m_appEvents;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(MyConnect), CMyConnect)

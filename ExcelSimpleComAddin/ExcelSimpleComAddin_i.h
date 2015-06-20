@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jun 14 22:24:39 2015
+/* at Sat Jun 20 14:39:50 2015
  */
 /* Compiler settings for ExcelSimpleComAddin.idl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -52,6 +52,13 @@ typedef interface IMyConnect IMyConnect;
 #endif 	/* __IMyConnect_FWD_DEFINED__ */
 
 
+#ifndef __IMyAppEvents_FWD_DEFINED__
+#define __IMyAppEvents_FWD_DEFINED__
+typedef interface IMyAppEvents IMyAppEvents;
+
+#endif 	/* __IMyAppEvents_FWD_DEFINED__ */
+
+
 #ifndef __MyConnect_FWD_DEFINED__
 #define __MyConnect_FWD_DEFINED__
 
@@ -62,6 +69,18 @@ typedef struct MyConnect MyConnect;
 #endif /* __cplusplus */
 
 #endif 	/* __MyConnect_FWD_DEFINED__ */
+
+
+#ifndef __MyAppEvents_FWD_DEFINED__
+#define __MyAppEvents_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class MyAppEvents MyAppEvents;
+#else
+typedef struct MyAppEvents MyAppEvents;
+#endif /* __cplusplus */
+
+#endif 	/* __MyAppEvents_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -143,6 +162,76 @@ EXTERN_C const IID IID_IMyConnect;
 #endif 	/* __IMyConnect_INTERFACE_DEFINED__ */
 
 
+#ifndef __IMyAppEvents_INTERFACE_DEFINED__
+#define __IMyAppEvents_INTERFACE_DEFINED__
+
+/* interface IMyAppEvents */
+/* [unique][nonextensible][oleautomation][uuid][object] */ 
+
+
+EXTERN_C const IID IID_IMyAppEvents;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("3921B728-A41D-4B85-BBDA-3DE0835FF792")
+    IMyAppEvents : public IUnknown
+    {
+    public:
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IMyAppEventsVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IMyAppEvents * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IMyAppEvents * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IMyAppEvents * This);
+        
+        END_INTERFACE
+    } IMyAppEventsVtbl;
+
+    interface IMyAppEvents
+    {
+        CONST_VTBL struct IMyAppEventsVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IMyAppEvents_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IMyAppEvents_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IMyAppEvents_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IMyAppEvents_INTERFACE_DEFINED__ */
+
+
 
 #ifndef __ExcelSimpleComAddinLib_LIBRARY_DEFINED__
 #define __ExcelSimpleComAddinLib_LIBRARY_DEFINED__
@@ -159,6 +248,14 @@ EXTERN_C const CLSID CLSID_MyConnect;
 
 class DECLSPEC_UUID("693DC738-F76F-451B-AE5B-75388ACD5EF0")
 MyConnect;
+#endif
+
+EXTERN_C const CLSID CLSID_MyAppEvents;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("EFD908FE-071F-4674-A006-085A523EE451")
+MyAppEvents;
 #endif
 #endif /* __ExcelSimpleComAddinLib_LIBRARY_DEFINED__ */
 

@@ -1,0 +1,25 @@
+HKCR
+{
+	ExcelComAddin.MyAppEvents.1 = s 'MyAppEvents Class'
+	{
+		CLSID = s '{EFD908FE-071F-4674-A006-085A523EE451}'
+	}
+	ExcelComAddin.MyAppEvents = s 'MyAppEvents Class'
+	{		
+		CurVer = s 'ExcelComAddin.MyAppEvents.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EFD908FE-071F-4674-A006-085A523EE451} = s 'MyAppEvents Class'
+		{
+			ProgID = s 'ExcelComAddin.MyAppEvents.1'
+			VersionIndependentProgID = s 'ExcelComAddin.MyAppEvents'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{F82B7BA6-2D0B-4153-80CE-C2AAF1C514AA}'
+			Version = s '1.0'
+		}
+	}
+}
